@@ -10,6 +10,8 @@ from IPython.display import display
 warnings.filterwarnings("ignore")
 
 
+# Reference - https://gist.github.com/jiahao87/c97214065f996b76ab8fe4ca1964b2b5
+
 def time_series_plot(df):
     """Given dataframe, generate times series plot of numeric data by daily, monthly and yearly frequency"""
     print("\nTo check time series of numeric data  by daily, monthly and yearly frequency")
@@ -22,15 +24,16 @@ def time_series_plot(df):
                     print("Plotting monthly data")
                 else:
                     print("Plotting yearly data")
-                for col_num in df.select_dtypes(include=np.number).columns:
-                    __ = df.copy()
-                    __ = __.set_index(col)
-                    __T = __.resample(p).sum()
-                    ax = __T[[col_num]].plot()
-                    ax.set_ylim(bottom=0)
-                    ax.get_yaxis().set_major_formatter(
-                        matplotlib.ticker.FuncFormatter(lambda x, p: format(int(x), ',')))
-                    plt.show()
+
+                __ = df.copy()
+                __ = __.set_index(col)
+                __T = __.resample(p).sum()
+                ax = __T[["ncodpers"]].plot()
+                ax.set_ylim(bottom=0)
+                ax.get_yaxis().set_major_formatter(
+                    matplotlib.ticker.FuncFormatter(lambda x, p: format(int(x), ',')))
+                plt.show()
+                del __
 
 
 def numeric_eda(df, hue=None):
